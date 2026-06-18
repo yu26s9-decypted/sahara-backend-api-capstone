@@ -1,6 +1,7 @@
 package org.yearup.repository;
 
 import org.junit.jupiter.api.Test;
+import org.mockito.Mock;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.data.jpa.test.autoconfigure.DataJpaTest;
 import org.springframework.test.context.jdbc.Sql;
@@ -28,5 +29,34 @@ class ProductRepositoryTest
         // assert
         assertNotNull(actual, "Because product 1 should exist in the test database.");
         assertEquals(499.99, actual.getPrice(), 0.001, "Because I tried to get product 1 from the database.");
+    }
+
+    @Test
+    public void getProduct_shouldReturnAllInInt(){
+        int productSize = productRepository.findAll().size();
+        int actualProductSize = 12;
+
+        assertEquals(actualProductSize, productSize);
+
+
+    }
+
+    @Test
+    public void updateProduct_shouldPersistNewStockValue(){
+        //arrange
+        int productId = 1;
+        Product actual = productRepository.findById(productId).orElseThrow();
+        actual.setStock(100);
+
+        //act
+        productRepository.save(actual);
+        Product updated = productRepository.findById(productId).orElseThrow();
+        // assert
+        assertNotNull(actual, "Product 1 should exist.");
+        assertEquals(100, updated.getStock());
+
+        //act
+
+
     }
 }
