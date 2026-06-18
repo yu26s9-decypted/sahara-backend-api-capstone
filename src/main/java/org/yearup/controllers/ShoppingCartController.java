@@ -57,17 +57,9 @@ public class ShoppingCartController
     // https://localhost:8080/cart/products/15  (15 is the productId to be added)
     // return the updated cart with status 201 Created
 
-//    @PostMapping("")
-//    @PreAuthorize("hasRole('ROLE_ADMIN')")
-//    public ResponseEntity<Category> addCategory(@RequestBody Category category)
-//    {
-//        System.out.println("hit");
-//        // insert the category and return it with status 201 Created
-//        return ResponseEntity.status(HttpStatus.CREATED).body(categoryService.create(category));
-//    }
-    @PostMapping("/product/{productId}")
+    @PostMapping("/products/{productId}")
     @PreAuthorize("isAuthenticated()")
-    public ResponseEntity<ShoppingCart> postCart(@PathVariable int productId, Principal principal){
+    public ResponseEntity<ShoppingCart> createCart(@PathVariable int productId, Principal principal){
        return null; // to complete when we implement service layer
     }
 
@@ -76,8 +68,18 @@ public class ShoppingCartController
     // https://localhost:8080/cart/products/15  (15 is the productId to be updated)
     // the BODY should be a ShoppingCartItem - quantity is the only value that will be updated; return the cart (200 OK)
 
+    @PutMapping("/products/{productId}")
+    @PreAuthorize("isAuthenticated()")
+    public ResponseEntity<ShoppingCart> updateCart(@PathVariable int productId, Principal principal){
+        return null; // to complete when we implement service layer
+    }
+
 
     // add a DELETE method to clear all products from the current users cart
     // https://localhost:8080/cart  - return the (now empty) cart so the front end can refresh it (200 OK)
-
+    @DeleteMapping("/products")
+    @PreAuthorize("isAuthenticated()")
+    public ResponseEntity<ShoppingCart> deleteCart(Principal principal){
+        return null;
+    }
 }
