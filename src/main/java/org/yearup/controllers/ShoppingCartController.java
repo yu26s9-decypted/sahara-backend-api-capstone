@@ -5,16 +5,14 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
-import org.yearup.models.Category;
-import org.yearup.models.Product;
-import org.yearup.models.ShoppingCart;
-import org.yearup.models.User;
+import org.yearup.models.*;
 import org.yearup.service.CategoryService;
 import org.yearup.service.ProductService;
 import org.yearup.service.ShoppingCartService;
 import org.yearup.service.UserService;
 
 import java.security.Principal;
+import java.util.List;
 
 // convert this class to a REST controller
 // only logged in users should have access to these actions
