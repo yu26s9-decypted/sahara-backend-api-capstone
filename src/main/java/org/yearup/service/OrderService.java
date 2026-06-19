@@ -1,6 +1,7 @@
 package org.yearup.service;
 
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.yearup.models.*;
 import org.yearup.repository.OrderLineItemRepository;
 import org.yearup.repository.OrderRepository;
@@ -21,8 +22,14 @@ public class OrderService {
         this.shoppingCartService = shoppingCartService;
     }
 
+    @Transactional
     public Order checkout(int userId){
         ShoppingCart orderCart = shoppingCartService.getByUserId(userId);
+
+        if(orderCart.getItems().isEmpty()){
+            throw new IllegalStateException("Can't checkout because cart is empty.");
+        }
+
         Order order = new Order();
 
         order.setUserId(userId);
@@ -44,6 +51,9 @@ public class OrderService {
            orderLineItemRepository.save(newItem);
 
         }
+
+
+        shoppingCartService.clearCart(userId);
         return saved;
     }
 }
