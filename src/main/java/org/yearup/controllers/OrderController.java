@@ -35,6 +35,6 @@ public class OrderController {
     @PostMapping("")
     public Order createOrder(Principal principal){
         System.out.println(orderService.checkout(getUserId(principal)));
-        return null;
+        return orderService.checkout(getUserId(principal));
     }
 }

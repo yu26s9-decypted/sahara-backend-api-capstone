@@ -17,13 +17,13 @@ public class Order {
     @Column(name = "date")
     LocalDate date;
     @Column(name = "address")
-    String address;
+    String address = "";
     @Column(name = "city")
-    String city;
+    String city = "";
     @Column(name = "state")
-    String state;
+    String state = "";
     @Column(name = "zip")
-    String zip;
+    String zip = "";
     @Column(name = "shipping_amount")
     BigDecimal shippingAmount;
 

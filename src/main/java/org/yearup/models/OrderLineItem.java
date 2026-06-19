@@ -21,7 +21,7 @@ public class OrderLineItem {
     @Column(name = "quantity")
     private int quantity;
     @Column(name = "discount")
-    private BigDecimal discount;
+    private BigDecimal discount = BigDecimal.valueOf(0);
 
     public OrderLineItem(){}
 

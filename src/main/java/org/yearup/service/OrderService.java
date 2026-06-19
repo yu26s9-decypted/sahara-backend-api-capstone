@@ -1,10 +1,13 @@
 package org.yearup.service;
 
 import org.springframework.stereotype.Service;
-import org.yearup.models.Order;
-import org.yearup.models.ShoppingCart;
+import org.yearup.models.*;
 import org.yearup.repository.OrderLineItemRepository;
 import org.yearup.repository.OrderRepository;
+import org.yearup.repository.ShoppingCartRepository;
+
+import java.math.BigDecimal;
+import java.time.LocalDate;
 
 @Service
 public class OrderService {
@@ -20,8 +23,27 @@ public class OrderService {
 
     public Order checkout(int userId){
         ShoppingCart orderCart = shoppingCartService.getByUserId(userId);
-        System.out.println(orderCart);
+        Order order = new Order();
 
-        return null;
+        order.setUserId(userId);
+        order.setDate(LocalDate.now());
+        order.setShippingAmount(BigDecimal.valueOf(0));
+
+        Order saved = orderRepository.save(order);
+
+        for(ShoppingCartItem item: orderCart.getItems().values()){
+            int productId = item.getProductId();
+            Product product = item.getProduct();
+
+           OrderLineItem newItem = new OrderLineItem();
+           newItem.setOrderId(saved.getOrderId());
+           newItem.setProductId(item.getProductId());
+           newItem.setQuantity(item.getQuantity());
+           newItem.setSalesPrice(BigDecimal.valueOf(item.getLineTotal()));
+
+           orderLineItemRepository.save(newItem);
+
+        }
+        return saved;
     }
 }
