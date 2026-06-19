@@ -52,4 +52,13 @@ public class ShoppingCartItem
 
         return subTotal - discountAmount;
     }
+
+    @Override
+    public String toString() {
+        return "ShoppingCartItem{" +
+                "product=" + product +
+                ", quantity=" + quantity +
+                ", discountPercent=" + discountPercent +
+                '}';
+    }
 }

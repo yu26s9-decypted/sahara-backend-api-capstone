@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 import org.yearup.models.*;
 import org.yearup.service.CategoryService;
@@ -68,8 +69,16 @@ public class ShoppingCartController
 
     @PutMapping("/products/{productId}")
     @PreAuthorize("isAuthenticated()")
-    public ResponseEntity<ShoppingCart> updateCart(@PathVariable int productId, Principal principal){
-        return null; // to complete when we implement service layer
+    public ResponseEntity<ShoppingCart> updateCart(@RequestBody ShoppingCartItem shoppingCartItem, @PathVariable int productId, Principal principal){
+        return ResponseEntity.status(HttpStatus.OK).body(shoppingCartService.updateItem(getUserId(principal), productId, shoppingCartItem.getQuantity()));
+
+    }
+
+    @DeleteMapping("/products/{productId}")
+    @PreAuthorize("isAuthenticated()")
+    public ResponseEntity<ShoppingCart> deleteItemFromCart( @PathVariable int productId, Principal principal){
+        ShoppingCart removed = shoppingCartService.removeItem(getUserId(principal), productId);
+        return ResponseEntity.status(HttpStatus.OK).body(removed);
     }
 
 
@@ -77,9 +86,10 @@ public class ShoppingCartController
 
     // add a DELETE method to clear all products from the current users cart
     // https://localhost:8080/cart  - return the (now empty) cart so the front end can refresh it (200 OK)
-    @DeleteMapping("/products")
+    @DeleteMapping("")
     @PreAuthorize("isAuthenticated()")
-    public ResponseEntity<ShoppingCart> deleteCart(Principal principal){
-        return null;
+    @Transactional
+    public ResponseEntity<ShoppingCart> clearCart(Principal principal){
+        return ResponseEntity.status(HttpStatus.OK).body(shoppingCartService.clearCart(getUserId(principal)));
     }
 }

@@ -72,6 +72,18 @@ public class ShoppingCartService
         return getByUserId(userId);
     }
 
+    public ShoppingCart updateItem(int userId, int productId, int quantity){
+        CartItem item = shoppingCartRepository.findByUserIdAndProductId(userId, productId);
+        item.setQuantity(quantity);
+        shoppingCartRepository.save(item);
+        return getByUserId(userId);
+    }
+
+    public ShoppingCart clearCart(int userId){
+        shoppingCartRepository.deleteByUserId(userId);
+        return getByUserId(userId);
+    }
+
 
     // add additional methods here
 }
