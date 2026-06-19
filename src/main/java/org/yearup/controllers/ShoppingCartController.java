@@ -57,8 +57,8 @@ public class ShoppingCartController
 
     @PostMapping("/products/{productId}")
     @PreAuthorize("isAuthenticated()")
-    public ResponseEntity<ShoppingCart> createCart(@PathVariable int productId, Principal principal){
-       return null; // to complete when we implement service layer
+    public ResponseEntity<ShoppingCart> addToCart(@PathVariable int productId, Principal principal){
+      return ResponseEntity.status(HttpStatus.CREATED).body(shoppingCartService.addItem(getUserId(principal), productId));
     }
 
 
@@ -71,6 +71,8 @@ public class ShoppingCartController
     public ResponseEntity<ShoppingCart> updateCart(@PathVariable int productId, Principal principal){
         return null; // to complete when we implement service layer
     }
+
+
 
 
     // add a DELETE method to clear all products from the current users cart
