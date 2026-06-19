@@ -81,4 +81,16 @@ public class OrderLineItem {
     public void setDiscount(BigDecimal discount) {
         this.discount = discount;
     }
+
+    @Override
+    public String toString() {
+        return "OrderLineItem{" +
+                "orderLineItemId=" + orderLineItemId +
+                ", orderId=" + orderId +
+                ", productId=" + productId +
+                ", salesPrice=" + salesPrice +
+                ", quantity=" + quantity +
+                ", discount=" + discount +
+                '}';
+    }
 }

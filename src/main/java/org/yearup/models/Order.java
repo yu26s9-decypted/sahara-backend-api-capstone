@@ -103,5 +103,19 @@ public class Order {
     public void setShippingAmount(BigDecimal shippingAmount) {
         this.shippingAmount = shippingAmount;
     }
+
+    @Override
+    public String toString() {
+        return "Order{" +
+                "orderId=" + orderId +
+                ", userId=" + userId +
+                ", date=" + date +
+                ", address='" + address + '\'' +
+                ", city='" + city + '\'' +
+                ", state='" + state + '\'' +
+                ", zip='" + zip + '\'' +
+                ", shippingAmount=" + shippingAmount +
+                '}';
+    }
 }
 
