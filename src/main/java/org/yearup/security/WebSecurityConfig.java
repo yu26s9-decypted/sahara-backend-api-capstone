@@ -78,7 +78,8 @@ public class WebSecurityConfig {
     public CorsFilter corsFilter(){
        CorsConfiguration config = new CorsConfiguration();
        config.setAllowedOrigins(List.of(
-               "http://localhost:4200"
+               "http://localhost:4200",
+               "https://sahara-backend-api-capstone.onrender.com"
        ));
 
         config.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS"));
