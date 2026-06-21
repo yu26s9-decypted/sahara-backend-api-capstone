@@ -79,7 +79,8 @@ public class WebSecurityConfig {
        CorsConfiguration config = new CorsConfiguration();
        config.setAllowedOrigins(List.of(
                "http://localhost:4200",
-               "https://sahara.andytang.tech"
+               "https://sahara.andytang.tech",
+               "http://127.0.0.1:5500"
        ));
 
         config.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS"));

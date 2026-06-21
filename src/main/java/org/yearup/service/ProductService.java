@@ -16,17 +16,18 @@ public class ProductService
         this.productRepository = productRepository;
     }
 
-    public List<Product> search(Integer categoryId, Double minPrice, Double maxPrice, String subCategory)
+    public List<Product> search(Integer categoryId, Double minPrice, Double maxPrice, String subCategory, String name)
     {
         List<Product> products = categoryId != null
                 ? productRepository.findByCategoryId(categoryId)
                 : productRepository.findAll();
 
         return products.stream()
-                       .filter(p -> minPrice == null || p.getPrice() >= minPrice)
-                       .filter(p -> maxPrice == null || p.getPrice() <= maxPrice)
-                       .filter(p -> subCategory == null || subCategory.equalsIgnoreCase(p.getSubCategory()))
-                       .toList();
+               .filter(p -> minPrice == null || p.getPrice() >= minPrice)
+               .filter(p -> maxPrice == null || p.getPrice() <= maxPrice)
+               .filter(p -> subCategory == null || subCategory.equalsIgnoreCase(p.getSubCategory()))
+                .filter(p -> name == null || p.getName().toLowerCase().contains(name.toLowerCase()))
+               .toList();
     }
 
     public List<Product> listByCategoryId(int categoryId)
