@@ -9,6 +9,7 @@ import org.yearup.repository.ShoppingCartRepository;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.util.List;
 
 @Service
 public class OrderService {
@@ -55,5 +56,13 @@ public class OrderService {
 
         shoppingCartService.clearCart(userId);
         return saved;
+    }
+
+    public List<Order> getByUserId(int userId){
+        return orderRepository.findByUserId(userId);
+    }
+
+    public List<OrderLineItem> getLineItems(int orderId){
+        return orderLineItemRepository.findByOrderId(orderId);
     }
 }
