@@ -16,7 +16,7 @@ A full-stack e-commerce REST API powering **Sahara**, a fictional storefront. Bu
 > Payments are processed in Stripe sandbox/test mode for obvious reasons lol
 
 **API:** https://sahara-backend-api-capstone.onrender.com
-**Frontend Repo:** [sahara-frontend](https://github.com/your-frontend-repo-link-here)
+**Check out the frontend repo!** [sahara-frontend](https://github.com/yu26s9-decypted/sahara-capstone3-angular-frontend)
 
 ---
 
