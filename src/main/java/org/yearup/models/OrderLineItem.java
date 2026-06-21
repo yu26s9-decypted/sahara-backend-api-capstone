@@ -22,6 +22,9 @@ public class OrderLineItem {
     private int quantity;
     @Column(name = "discount")
     private BigDecimal discount = BigDecimal.valueOf(0);
+    @ManyToOne
+    @JoinColumn(name = "product_id", insertable = false, updatable = false)
+    private Product product;
 
     public OrderLineItem(){}
 
@@ -80,6 +83,14 @@ public class OrderLineItem {
 
     public void setDiscount(BigDecimal discount) {
         this.discount = discount;
+    }
+
+    public Product getProduct() {
+        return product;
+    }
+
+    public void setProduct(Product product) {
+        this.product = product;
     }
 
     @Override
