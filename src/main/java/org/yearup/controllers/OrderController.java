@@ -1,6 +1,7 @@
 package org.yearup.controllers;
 
 import org.apache.coyote.Response;
+import org.aspectj.weaver.ast.Or;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -13,6 +14,7 @@ import org.yearup.service.OrderService;
 import org.yearup.service.UserService;
 
 import java.security.Principal;
+import java.util.List;
 
 @RestController
 @RequestMapping("/orders")
@@ -45,4 +47,20 @@ public class OrderController {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
         }
     }
+
+    @PreAuthorize("isAuthenticated()")
+    @GetMapping("")
+    public ResponseEntity<List<Order>> getOrders(Principal principal){
+       List<Order> order = orderService.getByUserId(getUserId(principal));
+       return ResponseEntity.status(HttpStatus.OK).body(order);
+    }
+
+    @PreAuthorize("isAuthenticated()")
+    @GetMapping("/{orderId}")
+    public ResponseEntity<List<OrderLineItem>> getOrderLineItems(@PathVariable int orderId){
+        List<OrderLineItem> orderLineItems = orderService.getLineItems(orderId);
+        return ResponseEntity.status(HttpStatus.OK).body(orderLineItems);
+    }
+
+
 }
