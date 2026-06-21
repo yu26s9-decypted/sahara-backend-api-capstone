@@ -77,10 +77,9 @@ public class ShoppingCartController
     @DeleteMapping("/products/{productId}")
     @PreAuthorize("isAuthenticated()")
     public ResponseEntity<ShoppingCart> deleteItemFromCart( @PathVariable int productId, Principal principal){
-        ShoppingCart removed = shoppingCartService.removeItem(getUserId(principal), productId);
+        ShoppingCart removed = shoppingCartService.deleteItem(getUserId(principal), productId);
         return ResponseEntity.status(HttpStatus.OK).body(removed);
     }
-
 
 
 

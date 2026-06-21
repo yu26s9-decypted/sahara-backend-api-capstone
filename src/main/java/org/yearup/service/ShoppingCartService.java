@@ -84,6 +84,12 @@ public class ShoppingCartService
         return getByUserId(userId);
     }
 
+    public ShoppingCart deleteItem(int userId, int productId){
+        CartItem item = shoppingCartRepository.findByUserIdAndProductId(userId, productId);
+        shoppingCartRepository.delete(item);
+        return getByUserId(userId);
+    }
+
 
     // add additional methods here
 }
