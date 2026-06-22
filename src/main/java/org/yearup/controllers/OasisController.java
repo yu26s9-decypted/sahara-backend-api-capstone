@@ -41,7 +41,7 @@ public class OasisController {
 
     @PreAuthorize("isAuthenticated()")
     @PutMapping("/subscribe")
-    public ResponseEntity<User> subscription(Principal principal, @RequestBody Map<String, Boolean> body){
+    public ResponseEntity<User> subscribe(Principal principal, @RequestBody Map<String, Boolean> body){
         User user = userRepository.findById(getUserId(principal))
                 .orElseThrow(() -> new RuntimeException("User not found"));
 
@@ -52,5 +52,18 @@ public class OasisController {
         return ResponseEntity.status(HttpStatus.OK).body(userRepository.save(user));
     }
 
+    @PreAuthorize("isAuthenticated()")
+    @PutMapping("/cancel")
+    public ResponseEntity<User> cancel(Principal principal){
+        User user = userRepository.findById(getUserId(principal))
+                .orElseThrow(() -> new RuntimeException("User not found"));
+
+
+        // could implement a feature where it waits until the persons subscription ran out but for now this
+        // for now, cancellation will revoke the membership immediately.
+        user.setOasis(false);
+
+        return ResponseEntity.status(HttpStatus.OK).body(userRepository.save(user));
+    }
 
 }
