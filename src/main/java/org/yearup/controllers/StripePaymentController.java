@@ -80,8 +80,8 @@ public class StripePaymentController {
                                 .putMetadata("username", username)
                                 .build()
                 )
-                .setSuccessUrl("http://localhost:4200/oasis/success")
-                .setCancelUrl("http://localhost:4200/oasis/cancel")
+                .setSuccessUrl("https://sahara.andytang.tech/oasis?success=true")
+                .setCancelUrl("https://sahara.andytang.tech/oasis?success=false")
                 .build();
 
         Session session = Session.create(params);
