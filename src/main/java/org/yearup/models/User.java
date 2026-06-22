@@ -1,6 +1,7 @@
 package org.yearup.models;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import jakarta.validation.constraints.NotNull;
 import org.yearup.models.authentication.Authority;
 
 import jakarta.persistence.*;

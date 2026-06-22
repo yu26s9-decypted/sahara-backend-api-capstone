@@ -49,4 +49,17 @@ public class UserService
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         return userRepository.save(user);
     }
+
+    public User updateOasisMembership(int userId, User updateState){
+         return userRepository.findById(userId).map(
+                 user -> {
+                     user.setOasis(updateState.isOasis());
+                     return userRepository.save(user);
+                 })
+                 .orElseThrow(() -> new RuntimeException("user does not exist" + userId));
+
+    }
+
+
+
 }

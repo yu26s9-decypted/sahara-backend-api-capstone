@@ -17,7 +17,6 @@ public class RegisterUserDto {
     private String confirmPassword;
     @NotEmpty(message = "Please select a role for this user.")
     private String role;
-
     private boolean isOasis = false;
 
     public String getUsername() {
