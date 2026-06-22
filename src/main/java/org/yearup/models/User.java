@@ -1,6 +1,7 @@
 package org.yearup.models;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import jakarta.validation.constraints.NotNull;
 import org.yearup.models.authentication.Authority;
 
 import jakarta.persistence.*;
@@ -26,6 +27,7 @@ public class User {
 
    @Column(name = "role")
    private String role;
+
 
    @JsonIgnore
    @Transient
@@ -86,6 +88,7 @@ public class User {
    public boolean isActivated() {
       return activated;
    }
+
 
    public void setActivated(boolean activated) {
       this.activated = activated;

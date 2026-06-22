@@ -2,6 +2,7 @@ package org.yearup.service;
 
 import org.springframework.stereotype.Service;
 import org.yearup.models.Profile;
+import org.yearup.models.User;
 import org.yearup.repository.ProfileRepository;
 
 import java.util.Optional;
@@ -40,5 +41,15 @@ public class ProfileService
                      return profileRepository.save(profile);
                  }
          );
+    }
+
+    public Profile updateOasisMembership(int userId, Profile updateState){
+        return profileRepository.findById(userId).map(
+                        user -> {
+                            user.setOasis(updateState.isOasis());
+                            return profileRepository.save(user);
+                        })
+                .orElseThrow(() -> new RuntimeException("user does not exist" + userId));
+
     }
 }
