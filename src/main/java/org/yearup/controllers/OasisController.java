@@ -41,7 +41,6 @@ public class OasisController {
         return user.getId();
     }
 
-
     @PreAuthorize("isAuthenticated()")
     @PutMapping("/subscribe")
     public ResponseEntity<Profile> subscribe(Principal principal, @RequestBody Map<String, Boolean> body){
