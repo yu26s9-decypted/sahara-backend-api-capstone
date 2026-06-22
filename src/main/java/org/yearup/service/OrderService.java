@@ -40,9 +40,6 @@ public class OrderService {
         Order saved = orderRepository.save(order);
 
         for(ShoppingCartItem item: orderCart.getItems().values()){
-            int productId = item.getProductId();
-            Product product = item.getProduct();
-
            OrderLineItem newItem = new OrderLineItem();
            newItem.setOrderId(saved.getOrderId());
            newItem.setProductId(item.getProductId());

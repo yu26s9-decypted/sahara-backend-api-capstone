@@ -27,6 +27,9 @@ public class User {
    @Column(name = "role")
    private String role;
 
+   @Column(name = "is_oasis")
+   private boolean isOasis;
+
    @JsonIgnore
    @Transient
    private boolean activated;
@@ -85,6 +88,14 @@ public class User {
 
    public boolean isActivated() {
       return activated;
+   }
+
+   public boolean isOasis() {
+      return isOasis;
+   }
+
+   public void setOasis(boolean oasis) {
+      isOasis = oasis;
    }
 
    public void setActivated(boolean activated) {

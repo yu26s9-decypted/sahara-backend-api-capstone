@@ -18,6 +18,8 @@ public class RegisterUserDto {
     @NotEmpty(message = "Please select a role for this user.")
     private String role;
 
+    private boolean isOasis = false;
+
     public String getUsername() {
         return username;
     }
@@ -48,5 +50,13 @@ public class RegisterUserDto {
 
     public void setRole(String role) {
         this.role = role;
+    }
+
+    public boolean isOasis() {
+        return isOasis;
+    }
+
+    public void setOasis(boolean oasis) {
+        isOasis = oasis;
     }
 }
