@@ -5,10 +5,13 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
+import org.yearup.models.Profile;
 import org.yearup.models.User;
+import org.yearup.repository.ProfileRepository;
 import org.yearup.repository.UserRepository;
 import org.yearup.service.CategoryService;
 import org.yearup.service.ProductService;
+import org.yearup.service.ProfileService;
 import org.yearup.service.UserService;
 
 import java.security.Principal;
@@ -19,15 +22,15 @@ import java.util.Optional;
 @RequestMapping("/oasis")
 @CrossOrigin
 public class OasisController {
+    private final ProfileRepository profileRepository;
     private final UserService userService;
-    private final UserRepository userRepository;
 
 
     // create an Autowired constructor to inject the categoryService and productService
     @Autowired
-    public OasisController(UserService userService, UserRepository userRepository){
+    public OasisController(ProfileRepository profileRepository, UserService userService){
+       this.profileRepository = profileRepository;
        this.userService = userService;
-       this.userRepository = userRepository;
 
     }
 
@@ -41,29 +44,29 @@ public class OasisController {
 
     @PreAuthorize("isAuthenticated()")
     @PutMapping("/subscribe")
-    public ResponseEntity<User> subscribe(Principal principal, @RequestBody Map<String, Boolean> body){
-        User user = userRepository.findById(getUserId(principal))
+    public ResponseEntity<Profile> subscribe(Principal principal, @RequestBody Map<String, Boolean> body){
+        Profile profile = profileRepository.findById(getUserId(principal))
                 .orElseThrow(() -> new RuntimeException("User not found"));
 
         boolean isOasis = body.getOrDefault("oasis", true);
 
-        user.setOasis(isOasis);
+        profile.setOasis(isOasis);
 
-        return ResponseEntity.status(HttpStatus.OK).body(userRepository.save(user));
+        return ResponseEntity.status(HttpStatus.OK).body(profileRepository.save(profile));
     }
 
     @PreAuthorize("isAuthenticated()")
     @PutMapping("/cancel")
-    public ResponseEntity<User> cancel(Principal principal){
-        User user = userRepository.findById(getUserId(principal))
+    public ResponseEntity<Profile> cancel(Principal principal){
+        Profile profile = profileRepository.findById(getUserId(principal))
                 .orElseThrow(() -> new RuntimeException("User not found"));
 
 
         // could implement a feature where it waits until the persons subscription ran out but for now this
         // for now, cancellation will revoke the membership immediately.
-        user.setOasis(false);
+        profile.setOasis(false);
 
-        return ResponseEntity.status(HttpStatus.OK).body(userRepository.save(user));
+        return ResponseEntity.status(HttpStatus.OK).body(profileRepository.save(profile));
     }
 
 }

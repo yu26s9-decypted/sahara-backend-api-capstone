@@ -34,6 +34,9 @@ public class Profile
     @Column(name = "zip")
     private String zip = "";
 
+    @Column(name = "is_oasis")
+    private boolean isOasis;
+
     public Profile()
     {
     }
@@ -139,5 +142,13 @@ public class Profile
     public void setZip(String zip)
     {
         this.zip = zip;
+    }
+
+    public boolean isOasis() {
+        return isOasis;
+    }
+
+    public void setOasis(boolean oasis) {
+        isOasis = oasis;
     }
 }
