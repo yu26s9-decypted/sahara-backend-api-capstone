@@ -72,6 +72,11 @@ public class StripePaymentController {
                                 .setQuantity(1L)
                                 .build()
                 )
+                .setAutomaticTax(
+                        SessionCreateParams.AutomaticTax.builder()
+                                .setEnabled(true)
+                                .build()
+                )
                 .putMetadata("username", username)
                 .setSubscriptionData(
                         SessionCreateParams.SubscriptionData.builder()
