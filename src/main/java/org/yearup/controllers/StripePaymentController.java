@@ -2,13 +2,11 @@ package org.yearup.controllers;
 
 import com.stripe.Stripe;
 import com.stripe.exception.StripeException;
-import com.stripe.model.Customer;
 import com.stripe.model.PaymentIntent;
+import com.stripe.model.StripeSearchResult;
 import com.stripe.model.Subscription;
 import com.stripe.model.checkout.Session;
-import com.stripe.param.CustomerCreateParams;
-import com.stripe.param.PaymentIntentCreateParams;
-import com.stripe.param.SubscriptionCreateParams;
+import com.stripe.param.*;
 import com.stripe.param.checkout.SessionCreateParams;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
@@ -87,4 +85,43 @@ public class StripePaymentController {
         Session session = Session.create(params);
         return ResponseEntity.status(HttpStatus.OK).body(Map.of("url", session.getUrl()));
     }
+
+    @PreAuthorize("isAuthenticated()")
+    @PostMapping("/cancel")
+    public ResponseEntity<Map<String, String>> cancelSubscription(Principal principal){
+        Stripe.apiKey = stripeApiKey;
+
+        try {
+            String username = principal.getName();
+
+            SubscriptionSearchParams params = SubscriptionSearchParams.builder()
+                    .setQuery("metadata['username']:'" + username + "'")
+                    .setLimit(1L)
+                    .build();
+
+            StripeSearchResult<Subscription> result =
+                    Subscription.search(params);
+
+            if (result.getData().isEmpty()){
+                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(Map.of("message", "No subscription found"));
+            }
+
+            Subscription subscription = result.getData().get(0);
+
+            SubscriptionUpdateParams updateParams = SubscriptionUpdateParams.builder()
+                    .setCancelAtPeriodEnd(true)
+                    .build();
+
+            subscription.update(updateParams);
+
+            return ResponseEntity.status(HttpStatus.OK).body(Map.of("message", "subscription was canceled and will reflect at the end of billign cycle"));
+
+        } catch (StripeException e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(Map.of("message", "There was an error. " + e.getMessage()));
+        }
+
+
+    }
+
+
 }

@@ -1,6 +1,7 @@
 package org.yearup.controllers;
 
 import com.stripe.model.Event;
+import com.stripe.model.Subscription;
 import com.stripe.model.checkout.Session;
 import com.stripe.net.Webhook;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,7 +41,6 @@ public class WebhookController {
                         .deserializeUnsafe();
 
 
-
                 String username = session.getMetadata().get("username");
                 User user = userService.getByUserName(username);
                 Profile profile = profileRepository.findById(user.getId())
@@ -49,6 +49,22 @@ public class WebhookController {
                 profile.setOasis(true);
                 profileRepository.save(profile);
             }
+
+            if("customer.subscription.deleted".equals(e.getType())){
+                Subscription subscription = (Subscription) e.getDataObjectDeserializer()
+                        .deserializeUnsafe();
+
+                String username = subscription.getMetadata().get("username");
+                User user = userService.getByUserName(username);
+                Profile profile = profileRepository.findById(user.getId())
+                        .orElseThrow();
+
+                profile.setOasis(false);
+                profileRepository.save(profile);
+
+            }
+
+
             return ResponseEntity.status(HttpStatus.OK).body("Received");
         } catch (Exception e) {
             System.out.println("WEBHOOK ERROR: " + e.getMessage());
