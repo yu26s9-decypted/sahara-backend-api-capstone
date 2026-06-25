@@ -51,6 +51,7 @@ class ProductRepositoryTest
         //act
         productRepository.save(actual);
         Product updated = productRepository.findById(productId).orElseThrow();
+        
         // assert
         assertNotNull(actual, "Product 1 should exist.");
         assertEquals(100, updated.getStock());
