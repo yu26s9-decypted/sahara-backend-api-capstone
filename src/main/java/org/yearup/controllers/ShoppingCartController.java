@@ -43,6 +43,7 @@ public class ShoppingCartController
 
         return user.getId();
     }
+
     // each method in this controller requires a Principal object as a parameter
     @PreAuthorize("isAuthenticated()")
     @GetMapping()

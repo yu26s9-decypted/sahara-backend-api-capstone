@@ -25,8 +25,6 @@ public class OasisController {
     private final ProfileRepository profileRepository;
     private final UserService userService;
 
-
-    // create an Autowired constructor to inject the categoryService and productService
     @Autowired
     public OasisController(ProfileRepository profileRepository, UserService userService){
        this.profileRepository = profileRepository;
@@ -61,8 +59,6 @@ public class OasisController {
                 .orElseThrow(() -> new RuntimeException("User not found"));
 
 
-        // could implement a feature where it waits until the persons subscription ran out but for now this
-        // for now, cancellation will revoke the membership immediately.
         profile.setOasis(false);
 
         return ResponseEntity.status(HttpStatus.OK).body(profileRepository.save(profile));
