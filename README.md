@@ -128,14 +128,11 @@ Query params: `cat`, `minPrice`, `maxPrice`, `subCategory`, `name`
 | `POST` | `/payment/create-subscription` | User |
 | `POST` | `/payment/cancel` | User |
 
+### Webhook
 
-## Authentication
-
-Login to receive a JWT token, then include it in the `Authorization` header:
-
-```
-Authorization: Bearer <your_token>
-```
+| Method | Endpoint           | Auth               |
+|--------|--------------------|--------------------|
+| `POST` | `/payment/webhook` | `Stripe-Signature` |
 
 ---
 
