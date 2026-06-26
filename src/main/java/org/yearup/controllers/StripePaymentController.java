@@ -106,6 +106,7 @@ public class StripePaymentController {
 
             Subscription subscription = result.getData().get(0);
 
+
             SubscriptionUpdateParams updateParams = SubscriptionUpdateParams.builder()
                     .setCancelAtPeriodEnd(true)
                     .build();
