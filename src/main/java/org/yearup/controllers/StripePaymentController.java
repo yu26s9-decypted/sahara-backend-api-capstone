@@ -22,13 +22,6 @@ import java.util.Map;
 @RequestMapping("/payment")
 @CrossOrigin
 public class StripePaymentController {
-    private final UserService userService;
-
-    public StripePaymentController(UserService userService) {
-        this.userService = userService;
-    }
-
-
     @Value("${stripe.api.key}")
     private String stripeApiKey;
 
@@ -105,6 +98,7 @@ public class StripePaymentController {
             }
 
             Subscription subscription = result.getData().get(0);
+
 
             SubscriptionUpdateParams updateParams = SubscriptionUpdateParams.builder()
                     .setCancelAtPeriodEnd(true)
